@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Count'em - Online Timer</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            font-family: 'Arial', sans-serif;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease;
+        }
+
+        .timer {
+            font-size: 5rem;
+            font-weight: bold;
+            margin: 2rem 0;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .controls button {
+            padding: 1rem 2rem;
+            margin: 0.5rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            backdrop-filter: blur(5px);
+        }
+
+        .controls button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Count'em</h1>
+        <div class="timer" id="timer">00:00:00</div>
+        <div class="controls">
+            <button onclick="startTimer()" id="startBtn">Start</button>
+            <button onclick="pauseTimer()" id="pauseBtn">Pause</button>
+            <button onclick="resetTimer()" id="resetBtn">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        let time = 0;
+        let isRunning = false;
+        let interval;
+        const timerDisplay = document.getElementById('timer');
+
+        function updateDisplay() {
+            const hours = Math.floor(time / 3600);
+            const minutes = Math.floor((time % 3600) / 60);
+            const seconds = time % 60;
+            
+            timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                timerDisplay.classList.add('pulse');
+                interval = setInterval(() => {
+                    time++;
+                    updateDisplay();
+                }, 1000);
+                document.getElementById('startBtn').style.background = 'rgba(46, 204, 113, 0.3)';
+            }
+        }
+
+        function pauseTimer() {
+            if (isRunning) {
+                isRunning = false;
+                timerDisplay.classList.remove('pulse');
+                clearInterval(interval);
+                document.getElementById('startBtn').style.background = 'rgba(255, 255, 255, 0.2)';
+            }
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            time = 0;
+            updateDisplay();
+            document.getElementById('startBtn').style.background = 'rgba(255, 255, 255, 0.2)';
+        }
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                isRunning ? pauseTimer() : startTimer();
+            } else if (e.code === 'KeyR') {
+                resetTimer();
+            }
+        });
+    </script>
+</body>
+</html>

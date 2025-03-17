@@ -4,88 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Showcase</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --background-dark: #0f172a;
+            --background-light: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --accent-success: #22c55e;
+            --accent-danger: #ef4444;
+            --transition-speed: 0.3s;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
             min-height: 100vh;
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            color: white;
+            background: var(--background-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
         }
 
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        /* Navigation */
         .nav-container {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
             z-index: 1000;
-            padding: 1.5rem;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .nav-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 1.5rem;
             list-style: none;
         }
 
         .nav-links button {
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            background: var(--background-light);
             border: none;
-            font-size: 1.1rem;
-            padding: 0.8rem 1.5rem;
-            border-radius: 12px;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+            transition: transform var(--transition-speed), 
+                      background-color var(--transition-speed);
         }
 
-        .nav-links button:before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .nav-links button:hover:before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .nav-links button.active {
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        .nav-links button:hover {
+            background: var(--primary-color);
             transform: translateY(-2px);
         }
 
+        .nav-links button.active {
+            background: var(--primary-color);
+        }
+
+        /* Project Container */
         .projects-container {
-            margin-top: 100px;
+            margin-top: 80px;
             padding: 2rem;
-            min-height: calc(100vh - 100px);
+            min-height: calc(100vh - 80px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -94,161 +85,30 @@
         .project-section {
             display: none;
             opacity: 0;
-            transform: translateY(20px);
-            padding: 2.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            background: var(--background-light);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             width: 90%;
-            max-width: 800px;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 600px;
+            transition: opacity var(--transition-speed),
+                      transform var(--transition-speed);
         }
 
         .project-section.active {
             display: block;
             opacity: 1;
-            transform: translateY(0);
-            animation: slideUp 0.5s ease forwards;
+            animation: fadeIn var(--transition-speed) ease forwards;
         }
 
         /* Timer Styles */
         .timer {
-            font-size: 6rem;
-            font-weight: bold;
+            font-size: 5rem;
+            font-weight: 600;
             text-align: center;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(45deg, #fff, #f0f0f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary);
             margin: 2rem 0;
-        }
-
-        /* Calculator Styles */
-        .calculator {
-            max-width: 350px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .calculator-display {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 1.5rem;
-            text-align: right;
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 12px;
-            color: white;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .calculator-buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.8rem;
-        }
-
-        .calculator button {
-            padding: 1.2rem;
-            font-size: 1.3rem;
-            border: none;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .calculator button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Snake Game Styles */
-        .game-board {
-            width: 400px;
-            height: 400px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            margin: 0 auto;
-            position: relative;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .snake-cell {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #4CAF50;
-            border-radius: 6px;
-            transition: all 0.1s linear;
-            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
-        }
-
-        .food {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #ff4757;
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(255, 71, 87, 0.7);
-            animation: pulse 1s infinite;
-        }
-
-        .score-container {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .score, .high-score {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1.5rem;
-            border-radius: 10px;
-            backdrop-filter: blur(5px);
-        }
-
-        .game-over {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.9);
-            padding: 2rem;
-            border-radius: 12px;
-            text-align: center;
-            display: none;
-            z-index: 100;
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .game-over h2 {
-            color: #ff4757;
-            margin-bottom: 1rem;
-        }
-
-        .game-over button {
-            margin-top: 1rem;
-            padding: 0.8rem 1.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .game-over button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
+            letter-spacing: 2px;
         }
 
         /* Controls */
@@ -256,41 +116,129 @@
             display: flex;
             justify-content: center;
             gap: 1rem;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
 
         .controls button {
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(5px);
+            background: var(--primary-color);
+            color: var(--text-primary);
+            transition: transform var(--transition-speed),
+                      background-color var(--transition-speed);
         }
 
         .controls button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Calculator Styles */
+        .calculator {
+            max-width: 320px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background: var(--background-dark);
+            border-radius: 12px;
+        }
+
+        .calculator-display {
+            background: var(--background-dark);
+            padding: 1.5rem;
+            text-align: right;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            color: var(--text-primary);
+        }
+
+        .calculator-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calculator button {
+            padding: 1rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--background-light);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+
+        .calculator button:hover {
+            background: var(--primary-color);
+        }
+                /* Snake Game Styles */
+        .game-board {
+            width: 400px;
+            height: 400px;
+            border: 2px solid var(--background-light);
+            margin: 0 auto;
+            position: relative;
+            background: var(--background-dark);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .snake-cell {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-success);
+            border-radius: 4px;
+        }
+
+        .food {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-danger);
+            border-radius: 50%;
+        }
+
+        .score-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .score, .high-score {
+            background: var(--background-dark);
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--background-dark);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+            z-index: 100;
+            border: 2px solid var(--primary-color);
+        }
+
+        .game-over h2 {
+            color: var(--accent-danger);
+            margin-bottom: 1rem;
         }
 
         /* Animations */
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .pulse {
-            animation: pulse 1s infinite;
         }
     </style>
 </head>
@@ -388,7 +336,6 @@
         function startTimer() {
             if (!isRunning) {
                 isRunning = true;
-                timerDisplay.classList.add('pulse');
                 interval = setInterval(() => {
                     time++;
                     updateDisplay();
@@ -399,7 +346,6 @@
         function pauseTimer() {
             if (isRunning) {
                 isRunning = false;
-                timerDisplay.classList.remove('pulse');
                 clearInterval(interval);
             }
         }
@@ -507,10 +453,6 @@
                 snakeElement.className = 'snake-cell';
                 snakeElement.style.left = `${segment.x * 20}px`;
                 snakeElement.style.top = `${segment.y * 20}px`;
-                if (index === 0) {
-                    snakeElement.style.background = '#2ecc71';
-                    snakeElement.style.boxShadow = '0 0 15px rgba(46, 204, 113, 0.8)';
-                }
                 gameBoard.appendChild(snakeElement);
             });
 
@@ -554,7 +496,7 @@
             clearInterval(gameInterval);
         }
 
-        // Snake Game Controls
+        // Event Listeners
         document.addEventListener('keydown', (e) => {
             if (!isGameRunning) return;
             
@@ -570,7 +512,6 @@
             }
         });
 
-        // Timer Keyboard Shortcuts
         document.addEventListener('keydown', (e) => {
             if (document.getElementById('timer-section').classList.contains('active')) {
                 if (e.code === 'Space') {

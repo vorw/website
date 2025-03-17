@@ -12,7 +12,6 @@
             font-family: 'Arial', sans-serif;
             background: linear-gradient(45deg, #1a1a2e, #16213e);
             color: white;
-            overflow-x: hidden;
         }
 
         /* Navigation */
@@ -34,92 +33,136 @@
             padding: 0;
         }
 
-        .nav-links a {
+        .nav-links button {
             color: white;
-            text-decoration: none;
+            background: none;
+            border: none;
             font-size: 1.2rem;
             padding: 0.5rem 1rem;
             border-radius: 25px;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            cursor: pointer;
         }
 
-        .nav-links a:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .nav-links a:hover:before {
-            transform: translateX(100%);
-        }
-
-        .nav-links a:hover {
+        .nav-links button:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
+        }
+
+        .nav-links button.active {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
         }
 
         /* Project Container */
         .projects-container {
             margin-top: 80px;
             padding: 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            animation: fadeIn 1s ease;
+            min-height: calc(100vh - 80px);
         }
 
-        .project-card {
+        .project-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+            padding: 2rem;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            padding: 1.5rem;
             backdrop-filter: blur(10px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            overflow: hidden;
-            position: relative;
         }
 
-        .project-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
+        .project-section.active {
+            display: block;
         }
 
-        .project-card h2 {
-            margin: 0 0 1rem 0;
-            font-size: 1.8rem;
-            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Timer Styles */
+        .timer {
+            font-size: 5rem;
+            font-weight: bold;
+            margin: 2rem 0;
+            text-align: center;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
         }
 
-        .project-card p {
-            margin: 0;
-            line-height: 1.6;
+        /* Calculator Styles */
+        .calculator {
+            max-width: 300px;
+            margin: 0 auto;
         }
 
-        /* Project iframe container */
-        .project-content {
-            margin-top: 1rem;
-            width: 100%;
-            height: 300px;
+        .calculator-display {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            text-align: right;
+            font-size: 2rem;
+            margin-bottom: 1rem;
             border-radius: 10px;
-            overflow: hidden;
-            position: relative;
         }
 
-        .project-content iframe {
-            width: 100%;
-            height: 100%;
+        .calculator-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calculator button {
+            padding: 1rem;
+            font-size: 1.2rem;
             border: none;
             border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calculator button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Snake Game Styles */
+        .game-board {
+            width: 400px;
+            height: 400px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            margin: 0 auto;
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .snake-cell {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #4CAF50;
+            border-radius: 4px;
+        }
+
+        .food {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff4757;
+            border-radius: 50%;
+        }
+
+        /* Common Button Styles */
+        .controls button {
+            padding: 1rem 2rem;
+            margin: 0.5rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .controls button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
         }
 
         /* Animations */
@@ -128,107 +171,262 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
-        /* Loading animation */
-        .loading {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .pulse {
+            animation: pulse 1s infinite;
         }
     </style>
 </head>
 <body>
     <nav class="nav-container">
         <ul class="nav-links">
-            <li><a href="#timer">Timer</a></li>
-            <li><a href="#calculator">Calculator</a></li>
-            <li><a href="#snake">Snake Game</a></li>
-            <li><a href="#about">About</a></li>
+            <li><button onclick="showProject('timer')" class="active">Timer</button></li>
+            <li><button onclick="showProject('calculator')">Calculator</button></li>
+            <li><button onclick="showProject('snake')">Snake Game</button></li>
         </ul>
     </nav>
 
     <div class="projects-container">
-        <!-- Timer Project -->
-        <div class="project-card" id="timer">
-            <h2>Count'em Timer</h2>
-            <p>A sleek and modern timer application with keyboard shortcuts.</p>
-            <div class="project-content">
-                <div class="loading"></div>
-                <iframe src="timer.html" frameborder="0"></iframe>
+        <!-- Timer Section -->
+        <div class="project-section active" id="timer-section">
+            <div class="timer" id="timer">00:00:00</div>
+            <div class="controls">
+                <button onclick="startTimer()" id="startBtn">Start</button>
+                <button onclick="pauseTimer()" id="pauseBtn">Pause</button>
+                <button onclick="resetTimer()" id="resetBtn">Reset</button>
             </div>
         </div>
 
-        <!-- Calculator Project -->
-        <div class="project-card" id="calculator">
-            <h2>Smart Calculator</h2>
-            <p>A beautiful calculator with advanced functions.</p>
-            <div class="project-content">
-                <div class="loading"></div>
-                <iframe src="calculator.html" frameborder="0"></iframe>
+        <!-- Calculator Section -->
+        <div class="project-section" id="calculator-section">
+            <div class="calculator">
+                <div class="calculator-display" id="display">0</div>
+                <div class="calculator-buttons">
+                    <button onclick="clearDisplay()">C</button>
+                    <button onclick="appendOperator('/')">/</button>
+                    <button onclick="appendOperator('*')">×</button>
+                    <button onclick="appendOperator('-')">-</button>
+                    <button onclick="appendNumber('7')">7</button>
+                    <button onclick="appendNumber('8')">8</button>
+                    <button onclick="appendNumber('9')">9</button>
+                    <button onclick="appendOperator('+')">+</button>
+                    <button onclick="appendNumber('4')">4</button>
+                    <button onclick="appendNumber('5')">5</button>
+                    <button onclick="appendNumber('6')">6</button>
+                    <button onclick="calculate()">=</button>
+                    <button onclick="appendNumber('1')">1</button>
+                    <button onclick="appendNumber('2')">2</button>
+                    <button onclick="appendNumber('3')">3</button>
+                    <button onclick="appendNumber('0')">0</button>
+                </div>
             </div>
         </div>
 
-        <!-- Snake Game Project -->
-        <div class="project-card" id="snake">
-            <h2>Snake Game</h2>
-            <p>Classic snake game with a modern twist.</p>
-            <div class="project-content">
-                <div class="loading"></div>
-                <iframe src="snake.html" frameborder="0"></iframe>
+        <!-- Snake Game Section -->
+        <div class="project-section" id="snake-section">
+            <div class="game-board" id="gameBoard"></div>
+            <div class="controls">
+                <button onclick="startGame()">Start Game</button>
+                <button onclick="pauseGame()">Pause</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Smooth scroll for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        // Tab Switching
+        function showProject(project) {
+            document.querySelectorAll('.project-section').forEach(section => {
+                section.classList.remove('active');
             });
+            document.querySelectorAll('.nav-links button').forEach(button => {
+                button.classList.remove('active');
+            });
+            document.getElementById(`${project}-section`).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Timer Logic
+        let time = 0;
+        let isRunning = false;
+        let interval;
+        const timerDisplay = document.getElementById('timer');
+
+        function updateDisplay() {
+            const hours = Math.floor(time / 3600);
+            const minutes = Math.floor((time % 3600) / 60);
+            const seconds = time % 60;
+            timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                timerDisplay.classList.add('pulse');
+                interval = setInterval(() => {
+                    time++;
+                    updateDisplay();
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            if (isRunning) {
+                isRunning = false;
+                timerDisplay.classList.remove('pulse');
+                clearInterval(interval);
+            }
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            time = 0;
+            updateDisplay();
+        }
+
+        // Calculator Logic
+        let displayValue = '0';
+        const display = document.getElementById('display');
+
+        function updateCalculatorDisplay() {
+            display.textContent = displayValue;
+        }
+
+        function appendNumber(num) {
+            if (displayValue === '0') displayValue = '';
+            displayValue += num;
+            updateCalculatorDisplay();
+        }
+
+        function appendOperator(op) {
+            displayValue += ` ${op} `;
+            updateCalculatorDisplay();
+        }
+
+        function clearDisplay() {
+            displayValue = '0';
+            updateCalculatorDisplay();
+        }
+
+        function calculate() {
+            try {
+                displayValue = eval(displayValue).toString();
+                updateCalculatorDisplay();
+            } catch (e) {
+                displayValue = 'Error';
+                updateCalculatorDisplay();
+            }
+        }
+
+        // Snake Game Logic
+        let snake = [{x: 10, y: 10}];
+        let food = {x: 15, y: 15};
+        let direction = 'right';
+        let gameInterval;
+        const gameBoard = document.getElementById('gameBoard');
+        const boardSize = 20;
+        let isGameRunning = false;
+
+        function createFood() {
+            food = {
+                x: Math.floor(Math.random() * boardSize),
+                y: Math.floor(Math.random() * boardSize)
+            };
+        }
+
+        function updateGame() {
+            const newHead = {...snake[0]};
+
+            switch(direction) {
+                case 'up': newHead.y--; break;
+                case 'down': newHead.y++; break;
+                case 'left': newHead.x--; break;
+                case 'right': newHead.x++; break;
+            }
+
+            if (newHead.x < 0 || newHead.x >= boardSize || 
+                newHead.y < 0 || newHead.y >= boardSize) {
+                stopGame();
+                return;
+            }
+
+            snake.unshift(newHead);
+
+            if (newHead.x === food.x && newHead.y === food.y) {
+                createFood();
+            } else {
+                snake.pop();
+            }
+
+            renderGame();
+        }
+
+        function renderGame() {
+            gameBoard.innerHTML = '';
+            snake.forEach(segment => {
+                const snakeElement = document.createElement('div');
+                snakeElement.className = 'snake-cell';
+                snakeElement.style.left = `${segment.x * 20}px`;
+                snakeElement.style.top = `${segment.y * 20}px`;
+                gameBoard.appendChild(snakeElement);
+            });
+
+            const foodElement = document.createElement('div');
+            foodElement.className = 'food';
+            foodElement.style.left = `${food.x * 20}px`;
+            foodElement.style.top = `${food.y * 20}px`;
+            gameBoard.appendChild(foodElement);
+        }
+
+        function startGame() {
+            if (!isGameRunning) {
+                isGameRunning = true;
+                gameInterval = setInterval(updateGame, 100);
+            }
+        }
+
+        function pauseGame() {
+            isGameRunning = false;
+            clearInterval(gameInterval);
+        }
+
+        function stopGame() {
+            pauseGame();
+            snake = [{x: 10, y: 10}];
+            direction = 'right';
+            createFood();
+            renderGame();
+        }
+
+        // Snake Game Controls
+        document.addEventListener('keydown', (e) => {
+            if (!isGameRunning) return;
+            
+            switch(e.key) {
+                case 'ArrowUp': if (direction !== 'down') direction = 'up'; break;
+                case 'ArrowDown': if (direction !== 'up') direction = 'down'; break;
+                case 'ArrowLeft': if (direction !== 'right') direction = 'left'; break;
+                case 'ArrowRight': if (direction !== 'left') direction = 'right'; break;
+            }
         });
 
-        // Remove loading animation when iframe loads
-        document.querySelectorAll('iframe').forEach(iframe => {
-            iframe.addEventListener('load', function() {
-                this.parentElement.querySelector('.loading').style.display = 'none';
-            });
-        });
-
-        // Add intersection observer for animation on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+        // Timer Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('timer-section').classList.contains('active')) {
+                if (e.code === 'Space') {
+                    isRunning ? pauseTimer() : startTimer();
+                } else if (e.code === 'KeyR') {
+                    resetTimer();
                 }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            observer.observe(card);
+            }
         });
+
+        // Initialize Snake Game
+        renderGame();
     </script>
 </body>
 </html>

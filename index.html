@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Showcase</title>
-    <!-- Add Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Base styles */
         * {
             margin: 0;
             padding: 0;
@@ -29,7 +27,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Navigation */
         .nav-container {
             position: fixed;
             top: 0;
@@ -85,7 +82,6 @@
             transform: translateY(-2px);
         }
 
-        /* Project Container */
         .projects-container {
             margin-top: 100px;
             padding: 2rem;
@@ -116,17 +112,6 @@
             animation: slideUp 0.5s ease forwards;
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         /* Timer Styles */
         .timer {
             font-size: 6rem;
@@ -137,36 +122,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin: 2rem 0;
-        }
-
-        /* Controls */
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .controls button {
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(5px);
-        }
-
-        .controls button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .controls button:active {
-            transform: translateY(-1px);
         }
 
         /* Calculator Styles */
@@ -245,45 +200,386 @@
             animation: pulse 1s infinite;
         }
 
+        .score-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .score, .high-score {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            display: none;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .game-over h2 {
+            color: #ff4757;
+            margin-bottom: 1rem;
+        }
+
+        .game-over button {
+            margin-top: 1rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .game-over button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .controls button {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(5px);
+        }
+
+        .controls button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
 
-        /* Score Display */
-        .score {
-            text-align: center;
-            font-size: 1.5rem;
-            margin: 1rem 0;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        /* Game Over Modal */
-        .game-over {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
-            padding: 2rem;
-            border-radius: 12px;
-            text-align: center;
-            display: none;
-        }
-
-        .game-over.show {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .pulse {
+            animation: pulse 1s infinite;
         }
     </style>
 </head>
 <body>
-    <!-- Rest of your HTML remains the same -->
+    <nav class="nav-container">
+        <ul class="nav-links">
+            <li><button onclick="showProject('timer')" class="active">Timer</button></li>
+            <li><button onclick="showProject('calculator')">Calculator</button></li>
+            <li><button onclick="showProject('snake')">Snake Game</button></li>
+        </ul>
+    </nav>
+
+    <div class="projects-container">
+        <!-- Timer Section -->
+        <div class="project-section active" id="timer-section">
+            <div class="timer" id="timer">00:00:00</div>
+            <div class="controls">
+                <button onclick="startTimer()" id="startBtn">Start</button>
+                <button onclick="pauseTimer()" id="pauseBtn">Pause</button>
+                <button onclick="resetTimer()" id="resetBtn">Reset</button>
+            </div>
+        </div>
+
+        <!-- Calculator Section -->
+        <div class="project-section" id="calculator-section">
+            <div class="calculator">
+                <div class="calculator-display" id="display">0</div>
+                <div class="calculator-buttons">
+                    <button onclick="clearDisplay()">C</button>
+                    <button onclick="appendOperator('/')">/</button>
+                    <button onclick="appendOperator('*')">×</button>
+                    <button onclick="appendOperator('-')">-</button>
+                    <button onclick="appendNumber('7')">7</button>
+                    <button onclick="appendNumber('8')">8</button>
+                    <button onclick="appendNumber('9')">9</button>
+                    <button onclick="appendOperator('+')">+</button>
+                    <button onclick="appendNumber('4')">4</button>
+                    <button onclick="appendNumber('5')">5</button>
+                    <button onclick="appendNumber('6')">6</button>
+                    <button onclick="calculate()">=</button>
+                    <button onclick="appendNumber('1')">1</button>
+                    <button onclick="appendNumber('2')">2</button>
+                    <button onclick="appendNumber('3')">3</button>
+                    <button onclick="appendNumber('0')">0</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Snake Game Section -->
+        <div class="project-section" id="snake-section">
+            <div class="score-container">
+                <div class="score">Score: <span id="currentScore">0</span></div>
+                <div class="high-score">High Score: <span id="highScore">0</span></div>
+            </div>
+            <div class="game-board" id="gameBoard"></div>
+            <div class="controls">
+                <button onclick="startGame()">Start Game</button>
+                <button onclick="pauseGame()">Pause</button>
+            </div>
+            <div class="game-over" id="gameOver">
+                <h2>Game Over!</h2>
+                <p>Final Score: <span id="finalScore">0</span></p>
+                <p>High Score: <span id="finalHighScore">0</span></p>
+                <button onclick="startGame()">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Switching Logic
+        function showProject(project) {
+            document.querySelectorAll('.project-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-links button').forEach(button => {
+                button.classList.remove('active');
+            });
+            document.getElementById(`${project}-section`).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Timer Logic
+        let time = 0;
+        let isRunning = false;
+        let interval;
+        const timerDisplay = document.getElementById('timer');
+
+        function updateDisplay() {
+            const hours = Math.floor(time / 3600);
+            const minutes = Math.floor((time % 3600) / 60);
+            const seconds = time % 60;
+            timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                timerDisplay.classList.add('pulse');
+                interval = setInterval(() => {
+                    time++;
+                    updateDisplay();
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            if (isRunning) {
+                isRunning = false;
+                timerDisplay.classList.remove('pulse');
+                clearInterval(interval);
+            }
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            time = 0;
+            updateDisplay();
+        }
+
+        // Calculator Logic
+        let displayValue = '0';
+        const display = document.getElementById('display');
+
+        function updateCalculatorDisplay() {
+            display.textContent = displayValue;
+        }
+
+        function appendNumber(num) {
+            if (displayValue === '0') displayValue = '';
+            displayValue += num;
+            updateCalculatorDisplay();
+        }
+
+        function appendOperator(op) {
+            displayValue += ` ${op} `;
+            updateCalculatorDisplay();
+        }
+
+        function clearDisplay() {
+            displayValue = '0';
+            updateCalculatorDisplay();
+        }
+
+        function calculate() {
+            try {
+                displayValue = eval(displayValue).toString();
+                updateCalculatorDisplay();
+            } catch (e) {
+                displayValue = 'Error';
+                updateCalculatorDisplay();
+            }
+        }
+
+        // Snake Game Logic
+        let snake = [{x: 10, y: 10}];
+        let food = {x: 15, y: 15};
+        let direction = 'right';
+        let gameInterval;
+        let score = 0;
+        let highScore = localStorage.getItem('snakeHighScore') || 0;
+        const gameBoard = document.getElementById('gameBoard');
+        const boardSize = 20;
+        let isGameRunning = false;
+
+        document.getElementById('highScore').textContent = highScore;
+
+        function createFood() {
+            food = {
+                x: Math.floor(Math.random() * boardSize),
+                y: Math.floor(Math.random() * boardSize)
+            };
+            while (snake.some(segment => segment.x === food.x && segment.y === food.y)) {
+                food = {
+                    x: Math.floor(Math.random() * boardSize),
+                    y: Math.floor(Math.random() * boardSize)
+                };
+            }
+        }
+
+        function updateGame() {
+            const newHead = {...snake[0]};
+
+            switch(direction) {
+                case 'up': newHead.y--; break;
+                case 'down': newHead.y++; break;
+                case 'left': newHead.x--; break;
+                case 'right': newHead.x++; break;
+            }
+
+            if (newHead.x < 0 || newHead.x >= boardSize || 
+                newHead.y < 0 || newHead.y >= boardSize ||
+                snake.some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
+                gameOver();
+                return;
+            }
+
+            snake.unshift(newHead);
+
+            if (newHead.x === food.x && newHead.y === food.y) {
+                score += 10;
+                document.getElementById('currentScore').textContent = score;
+                createFood();
+            } else {
+                snake.pop();
+            }
+
+            renderGame();
+        }
+
+        function renderGame() {
+            gameBoard.innerHTML = '';
+            snake.forEach((segment, index) => {
+                const snakeElement = document.createElement('div');
+                snakeElement.className = 'snake-cell';
+                snakeElement.style.left = `${segment.x * 20}px`;
+                snakeElement.style.top = `${segment.y * 20}px`;
+                if (index === 0) {
+                    snakeElement.style.background = '#2ecc71';
+                    snakeElement.style.boxShadow = '0 0 15px rgba(46, 204, 113, 0.8)';
+                }
+                gameBoard.appendChild(snakeElement);
+            });
+
+            const foodElement = document.createElement('div');
+            foodElement.className = 'food';
+            foodElement.style.left = `${food.x * 20}px`;
+            foodElement.style.top = `${food.y * 20}px`;
+            gameBoard.appendChild(foodElement);
+        }
+
+        function gameOver() {
+            isGameRunning = false;
+            clearInterval(gameInterval);
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('snakeHighScore', highScore);
+                document.getElementById('highScore').textContent = highScore;
+            }
+            const gameOverScreen = document.getElementById('gameOver');
+            document.getElementById('finalScore').textContent = score;
+            document.getElementById('finalHighScore').textContent = highScore;
+            gameOverScreen.style.display = 'block';
+        }
+
+        function startGame() {
+            document.getElementById('gameOver').style.display = 'none';
+            snake = [{x: 10, y: 10}];
+            direction = 'right';
+            score = 0;
+            document.getElementById('currentScore').textContent = score;
+            createFood();
+            
+            if (!isGameRunning) {
+                isGameRunning = true;
+                gameInterval = setInterval(updateGame, 100);
+            }
+        }
+
+        function pauseGame() {
+            isGameRunning = false;
+            clearInterval(gameInterval);
+        }
+
+        // Snake Game Controls
+        document.addEventListener('keydown', (e) => {
+            if (!isGameRunning) return;
+            
+            if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.key)) {
+                e.preventDefault();
+            }
+            
+            switch(e.key) {
+                case 'ArrowUp': if (direction !== 'down') direction = 'up'; break;
+                case 'ArrowDown': if (direction !== 'up') direction = 'down'; break;
+                case 'ArrowLeft': if (direction !== 'right') direction = 'left'; break;
+                case 'ArrowRight': if (direction !== 'left') direction = 'right'; break;
+            }
+        });
+
+        // Timer Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('timer-section').classList.contains('active')) {
+                if (e.code === 'Space') {
+                    isRunning ? pauseTimer() : startTimer();
+                } else if (e.code === 'KeyR') {
+                    resetTimer();
+                }
+            }
+        });
+    </script>
 </body>
 </html>
